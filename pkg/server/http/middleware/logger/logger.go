@@ -11,7 +11,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
 	"github.com/satriajidam/go-echo-skeleton/pkg/log"
-	"github.com/satriajidam/go-echo-skeleton/pkg/server/http/middleware/requestid"
 )
 
 // Config defines the config for logger middleware
@@ -37,6 +36,7 @@ type logFields struct {
 	path      string
 	clientIP  string
 	host      string
+	referer   string
 	latency   time.Duration
 	userAgent string
 	payload   string
@@ -49,6 +49,8 @@ func createDumplogger(logger *zerolog.Logger, fields logFields) zerolog.Logger {
 		Str("method", fields.method).
 		Str("path", fields.path).
 		Str("clientIP", fields.clientIP).
+		Str("host", fields.host).
+		Str("referer", fields.referer).
 		Dur("latency", fields.latency).
 		Str("userAgent", fields.userAgent).
 		Str("payload", fields.payload).
@@ -99,7 +101,7 @@ func New(port string, config ...Config) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(ctx echo.Context) error {
 			start := time.Now()
-			requestID := ctx.Request().Header.Get(requestid.HeaderXRequestID)
+			requestID := ctx.Request().Header.Get(echo.HeaderXRequestID)
 			method := ctx.Request().Method
 			routePath := ctx.Path()
 			path := ctx.Request().URL.Path
@@ -134,10 +136,13 @@ func New(port string, config ...Config) echo.MiddlewareFunc {
 					end = end.UTC()
 				}
 
-				if err == nil &&
+				errMsg := "-"
+				if err != nil {
+					errMsg = err.Error()
+				} else if err == nil &&
 					ctx.Response().Status >= http.StatusBadRequest &&
 					ctx.Response().Status <= http.StatusNetworkAuthenticationRequired {
-					err = fmt.Errorf(http.StatusText(ctx.Response().Status))
+					errMsg = http.StatusText(ctx.Response().Status)
 				}
 
 				msg := fmt.Sprintf("HTTP request to port %s", port)
@@ -149,6 +154,7 @@ func New(port string, config ...Config) echo.MiddlewareFunc {
 					path:      path,
 					clientIP:  ctx.RealIP(),
 					host:      ctx.Request().Host,
+					referer:   ctx.Request().Referer(),
 					latency:   latency,
 					userAgent: ctx.Request().UserAgent(),
 					payload:   payload,
@@ -161,11 +167,11 @@ func New(port string, config ...Config) echo.MiddlewareFunc {
 				case ctx.Response().Status >= http.StatusBadRequest &&
 					ctx.Response().Status < http.StatusInternalServerError:
 					{
-						dumpStdout.Warn().Timestamp().Err(err).Msg(msg)
+						dumpStdout.Warn().Timestamp().Str(log.LogFieldError, errMsg).Msg(msg)
 					}
 				case ctx.Response().Status >= http.StatusInternalServerError:
 					{
-						dumpStderr.Error().Timestamp().Err(err).Msg(msg)
+						dumpStderr.Error().Timestamp().Str(log.LogFieldError, errMsg).Msg(msg)
 					}
 				default:
 					dumpStdout.Info().Timestamp().Msg(msg)

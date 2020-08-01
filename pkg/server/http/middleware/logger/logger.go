@@ -158,7 +158,8 @@ func New(port string, config ...Config) echo.MiddlewareFunc {
 				dumpStderr := createDumplogger(stderr, fields)
 
 				switch {
-				case ctx.Response().Status >= http.StatusBadRequest && ctx.Response().Status < http.StatusInternalServerError:
+				case ctx.Response().Status >= http.StatusBadRequest &&
+					ctx.Response().Status < http.StatusInternalServerError:
 					{
 						dumpStdout.Warn().Timestamp().Err(err).Msg(msg)
 					}

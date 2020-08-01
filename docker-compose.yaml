@@ -1,0 +1,26 @@
+version: '2.4'
+services:
+  mysql:
+    image: mysql:5.7.31
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: skeleton
+    ports:
+    - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "-P", "3306", "-uroot", "-ptoor"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 10s
+  keydb:
+    image: eqalpha/keydb:x86_64_v6.0.13
+    command: ["keydb-server", "--server-threads", "2", "--requirepass", "unlock"]
+    ports:
+    - 6379:6379
+    healthcheck:
+      test: ["CMD", "keydb-cli" , "-h", "127.0.0.1", "-p", "6379", "-a", "unlock", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s

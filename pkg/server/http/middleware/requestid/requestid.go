@@ -5,7 +5,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-const KeyRequestID = "RequestID"
 const HeaderXRequestID = "X-Request-ID"
 
 // New initializes the request ID middleware.
@@ -19,7 +18,7 @@ func New() echo.MiddlewareFunc {
 				rid = uuid.New().String()
 			}
 
-			ctx.Set(KeyRequestID, rid)
+			ctx.Set(HeaderXRequestID, rid)
 			ctx.Request().Header.Set(HeaderXRequestID, rid)
 			ctx.Response().Header().Set(HeaderXRequestID, rid)
 

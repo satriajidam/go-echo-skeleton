@@ -18,19 +18,19 @@ type Config struct {
 	// - debug
 	AppMode string `envconfig:"APP_MODE" default:"debug"`
 
-	// Graceful shutdown timeout in seconds.
+	// Graceful shutdown timeout.
 	GracefulTimeout time.Duration `envconfig:"GRACEFUL_TIMEOUT" default:"5s"`
 
 	// HTTP Server configurations.
-	HTTPServerPort                   string        `envconfig:"HTTP_SERVER_PORT" default:"80"`
-	HTTPServerEnableCORS             bool          `envconfig:"HTTP_SERVER_ENABLE_CORS" default:"true"`
-	HTTPServerEnablePredefinedRoutes bool          `envconfig:"HTTP_SERVER_ENABLE_PREDEFINED_ROUTES" default:"true"`
-	HTTPServerAllowMethods           []string      `envconfig:"HTTP_SERVER_ALLOW_METHODS" default:""`
-	HTTPServerAllowHeaders           []string      `envconfig:"HTTP_SERVER_ALLOW_HEADERS" default:""`
-	HTTPServerAllowOrigins           []string      `envconfig:"HTTP_SERVER_ALLOW_ORIGINS" default:""`
-	HTTPServerMaxAge                 time.Duration `envconfig:"HTTP_SERVER_MAX_AGE" default:""`
-	HTTPServerMonitorGroupedStatus   bool          `envconfig:"HTTP_SERVER_MONITOR_GROUPED_STATUS" default:"false"`
-	HTTPServerMonitorSkipPaths       []string      `envconfig:"HTTP_SERVER_MONITOR_SKIP_PATHS" default:"/_/health"`
+	HTTPServerPort                   string   `envconfig:"HTTP_SERVER_PORT" default:"80"`
+	HTTPServerEnableCORS             bool     `envconfig:"HTTP_SERVER_ENABLE_CORS" default:"true"`
+	HTTPServerEnablePredefinedRoutes bool     `envconfig:"HTTP_SERVER_ENABLE_PREDEFINED_ROUTES" default:"true"`
+	HTTPServerAllowMethods           []string `envconfig:"HTTP_SERVER_ALLOW_METHODS" default:""`
+	HTTPServerAllowHeaders           []string `envconfig:"HTTP_SERVER_ALLOW_HEADERS" default:""`
+	HTTPServerAllowOrigins           []string `envconfig:"HTTP_SERVER_ALLOW_ORIGINS" default:""`
+	HTTPServerMaxAgeSeconds          int      `envconfig:"HTTP_SERVER_MAX_AGE_SECONDS" default:""`
+	HTTPServerMonitorGroupedStatus   bool     `envconfig:"HTTP_SERVER_MONITOR_GROUPED_STATUS" default:"false"`
+	HTTPServerMonitorSkipPaths       []string `envconfig:"HTTP_SERVER_MONITOR_SKIP_PATHS" default:"/_/health"`
 
 	// Prometheus Server configurations.
 	PrometheusServerPort          string `envconfig:"PROMETHEUS_SERVER_PORT" default:"9180"`

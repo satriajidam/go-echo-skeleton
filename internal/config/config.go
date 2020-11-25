@@ -10,7 +10,7 @@ import (
 // Config stores application's configurations.
 type Config struct {
 	// The name of this application.
-	AppName string `envconfig:"APP_NAME" default:"gin"`
+	AppName string `envconfig:"APP_NAME" default:"api-server"`
 
 	// Available levels are based on https://github.com/rs/zerolog#leveled-logging.
 	// zerolog allows for logging at the following levels (from highest to lowest):

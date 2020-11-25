@@ -2,7 +2,7 @@ package sqlite
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/satriajidam/go-gin-skeleton/pkg/database/sql"
+	"github.com/satriajidam/go-echo-skeleton/pkg/database/sql"
 
 	// Import SQLite driver.
 	_ "github.com/jinzhu/gorm/dialects/sqlite"

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/jinzhu/gorm"
-	"github.com/satriajidam/go-gin-skeleton/pkg/log"
+	"github.com/satriajidam/go-echo-skeleton/pkg/log"
 )
 
 // DBConfig stores SQL database common connection config.

@@ -7,7 +7,7 @@ import (
 
 	cachev8 "github.com/go-redis/cache/v8"
 	redisv8 "github.com/go-redis/redis/v8"
-	"github.com/satriajidam/go-gin-skeleton/pkg/log"
+	"github.com/satriajidam/go-echo-skeleton/pkg/log"
 )
 
 var (

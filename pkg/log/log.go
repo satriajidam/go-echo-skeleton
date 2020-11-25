@@ -7,10 +7,21 @@ import (
 	"sync"
 	"time"
 
+	"github.com/kelseyhightower/envconfig"
 	"github.com/logrusorgru/aurora"
 	"github.com/rs/zerolog"
-	"github.com/satriajidam/go-gin-skeleton/pkg/config"
 )
+
+type logLevel string
+
+const (
+	debugLevel logLevel = "debug"
+	infoLevel  logLevel = "info"
+)
+
+type config struct {
+	loggerLevel logLevel `envconfig:"LOGGER_LEVEL" default:"debug"`
+}
 
 type logger struct {
 	stderr zerolog.Logger
@@ -42,9 +53,15 @@ const (
 
 func init() {
 	once.Do(func() {
-		logLevel := zerolog.DebugLevel
+		logConfig := &config{}
+		envconfig.MustProcess("", logConfig)
 
-		if config.IsReleaseMode() {
+		var logLevel zerolog.Level
+
+		switch logConfig.loggerLevel {
+		case debugLevel:
+			logLevel = zerolog.DebugLevel
+		case infoLevel:
 			logLevel = zerolog.InfoLevel
 		}
 

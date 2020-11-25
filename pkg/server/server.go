@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/satriajidam/go-gin-skeleton/pkg/log"
+	"github.com/satriajidam/go-echo-skeleton/pkg/log"
 )
 
 // Server is an interface for all type of servers.

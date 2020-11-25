@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
-	"github.com/satriajidam/go-gin-skeleton/pkg/database/sql"
+	"github.com/satriajidam/go-echo-skeleton/pkg/database/sql"
 
 	// Import Microsoft SQL Server driver.
 	_ "github.com/jinzhu/gorm/dialects/mssql"

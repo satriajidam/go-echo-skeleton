@@ -1,6 +1,6 @@
 # Compile source code.
 FROM golang:1.14-stretch as builder
-ENV SRC_DIR="/go/src/github.com/satriajidam/go-gin-skeleton"
+ENV SRC_DIR="/go/src/github.com/satriajidam/go-echo-skeleton"
 WORKDIR $SRC_DIR
 COPY go.mod .
 COPY go.sum .

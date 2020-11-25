@@ -2,6 +2,8 @@
 
 A skeleton project for building RESTful API with Go &amp; Echo using Clean Architecture.
 
+This project use [golang-standards/project-layout](https://github.com/golang-standards/project-layout) to structure its layout.
+
 ## Dependencies
 
 * Web Framework: [labstack/echo](https://github.com/labstack/echo)
